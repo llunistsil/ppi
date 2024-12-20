@@ -107,18 +107,6 @@
         "staticFilePath": "dist/ppi/browser",
         "spa": true
       }
-    },
-    "serve-functions": {
-      "command": "npx netlify dev"
-    },
-    "deploy-functions": {
-      "dependsOn": ["lint"],
-      "command": "npx netlify deploy",
-      "configurations": {
-        "production": {
-          "command": "npx netlify deploy --prod"
-        }
-      }
     }
   }
 }
