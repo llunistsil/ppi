@@ -1,0 +1,26 @@
+<form tuiCardLarge="compact" class="tui-container_menu tui-space_auto">
+  <p class="tui-text_h1 tui-space_auto">Вход</p>
+
+  <tui-textfield iconStart="@tui.user">
+    <label for="username" tuiLabel>Email</label>
+    <input id="username" tuiTextfield />
+  </tui-textfield>
+
+  <tui-textfield iconStart="@tui.hash">
+    <label for="password" tuiLabel>Пароль</label>
+    <input id="password" tuiTextfield type="password" />
+    <tui-icon tuiPassword />
+  </tui-textfield>
+
+  <button
+    tuiButton
+    type="button"
+    (click)="this.userService.auth()"
+  >
+    Войти
+  </button>
+  <div class="bottom-link">
+    Нет аккаунта?
+    <a tuiLink [routerLink]="['../','register']">Создай</a>
+  </div>
+</form>

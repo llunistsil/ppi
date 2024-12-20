@@ -1,0 +1,15 @@
+<div tuiCell class="cell" (tuiHoveredChange)="onHovered($event)">
+  @if (!hovered) {
+    <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+  } @else {
+    <tui-avatar src="@tui.x" [round]="false" [style.backgroundColor]="'var(--tui-background-base)'" (click)="deleteCell()"></tui-avatar>
+  }
+  <div tuiTitle="s" class="tui-text_body-s">{{ title }}</div>
+  <tui-textfield
+    class="cell-field"
+    tuiTextfieldSize="s"
+    [tuiTextfieldCleaner]="false"
+  >
+    <input class="cell-input" placeholder="0" tuiTextfield />
+  </tui-textfield>
+</div>

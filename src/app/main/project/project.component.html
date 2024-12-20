@@ -1,0 +1,458 @@
+<div id="header">
+
+  <div class="title-cont">
+    <tui-icon
+      class="icons"
+      icon="@tui.figma"
+    />
+    <input
+      class="title tui-text_body-m"
+      type="text"
+      [(ngModel)]="value"
+    />
+    <a
+      class="button tui-text_body-m"
+      tuiButton
+      type="button"
+      [routerLink]="['profile']"
+    >
+      Сохранить
+    </a>
+  </div>
+
+
+  @if (!localStorage.getItem('user')) {
+    <div class="title-cont">
+      <a
+        class="button tui-text_body-m"
+        tuiButton
+        type="button"
+        [routerLink]="['login']"
+      >
+        Вход
+      </a>
+      <a
+        class="button tui-text_body-s"
+        tuiButton
+        type="button"
+        [routerLink]="['register']"
+      >
+        Регистрация
+      </a>
+    </div>
+  } @else {
+    <div class="title-cont">
+      <a
+        class="button tui-text_body-m"
+        tuiButton
+        type="button"
+        [routerLink]="['profile']"
+      >
+        Профиль
+      </a>
+    </div>
+  }
+</div>
+
+<div class="cont">
+  <div id="cont1" tuiCardLarge tuiAppearance="floating">
+    <tui-tabs id="tab1" [(activeItemIndex)]="activeItemIndex1" class="tabs" size="m" underline="false">
+      <button
+        class="tab"
+        tuiTab
+        type="button"
+      >
+        Модули
+      </button>
+      <button
+        class="tab"
+        tuiTab
+        type="button"
+      >
+        Ресурсы
+      </button>
+    </tui-tabs>
+    @if (activeItemIndex1 === 0) {
+      <tui-textfield
+        iconStart="@tui.search"
+        tuiTextfieldSize="s"
+        [tuiTextfieldCleaner]="false"
+      >
+        <select
+          tuiTextfield
+          placeholder="Выберите модуль"
+          [(ngModel)]="module"
+        ></select>
+          <tui-data-list-wrapper
+            *tuiTextfieldDropdown
+            [items]="this.modules"
+          />
+        @if (this.module !== EMPTY_QUERY) {
+          <button
+            appearance="secondary"
+            iconStart="@tui.plus"
+            size="xs"
+            tuiIconButton
+            type="button"
+            (click)="this.currentModules.push(this.module + '')"
+          >
+            Добавить
+          </button>
+        }
+      </tui-textfield>
+      <ng-container [ngTemplateOutlet]="modules" />
+    } @else {
+      <tui-textfield
+        iconStart="@tui.search"
+        tuiTextfieldSize="s"
+        [tuiTextfieldCleaner]="false"
+      >
+        <select
+          tuiTextfield
+          placeholder="Выберите ресурсы"
+          [(ngModel)]="resource"
+        ></select>
+        <tui-data-list-wrapper
+          *tuiTextfieldDropdown
+          [items]="this.resources"
+        />
+        @if (this.resource !== EMPTY_QUERY) {
+          <button
+            appearance="secondary"
+            iconStart="@tui.plus"
+            size="xs"
+            tuiIconButton
+            type="button"
+            (click)="this.currentResources.push(this.resource + '')"
+          >
+            Добавить
+          </button>
+        }
+      </tui-textfield>
+      <ng-container [ngTemplateOutlet]="res" />
+    }
+    <div class="cont-dop">
+      <div class="dop">
+        <div class="dop-dop">
+          <div class="tui-text_body-s">Рабочая сила</div>
+          <input
+            tuiSwitch
+            type="checkbox"
+            [(ngModel)]="strength"
+          />
+        </div>
+
+        <div class="dop-dop">
+          <div class="tui-text_body-s">Освещение</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input
+              class="cell-input"
+              placeholder="100%"
+              tuiTextfield
+            />
+          </tui-textfield>
+        </div>
+      </div>
+
+      <div class="tui-container_adaptive tui-space_auto">
+        <button
+          size="s"
+          tuiButton
+          type="button"
+          class="button"
+        >
+          Рассчитать
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cont2" tuiCardLarge tuiAppearance="floating">
+    <tui-tabs id="tab2" [(activeItemIndex)]="activeItemIndex2" class="tabs" size="m" underline="false">
+      <button
+        class="tab"
+        tuiTab
+        type="button"
+      >
+        Сводка
+      </button>
+      <button
+        class="tab"
+        tuiTab
+        type="button"
+      >
+        Логистический граф
+      </button>
+    </tui-tabs>
+    @if (activeItemIndex2===0) {
+    <div id="cols">
+      <div>
+        <div class="tui-text_body-s text">Производство</div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false"
+                      [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Квантовые трубки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="10000" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Микрочипы</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="10000" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Энергоячейки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Теладианий</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Рационы питания</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Квантовые трубки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+      </div>
+      <div>
+        <div class="tui-text_body-s text">Потребление</div>
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false"
+                      [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Квантовые трубки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="10000" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Микрочипы</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="10000" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Энергоячейки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Теладианий</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Рационы питания</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Квантовые трубки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+      </div>
+      <div>
+        <div class="tui-text_body-s text">Строительство</div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false"
+                      [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Квантовые трубки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="10000" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Микрочипы</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="10000" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Энергоячейки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Теладианий</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Рационы питания</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+
+        <div tuiCell class="cell" [tuiDropdown]="dropdown" [(tuiDropdownOpen)]="open" (click)="onClick()">
+          <tui-avatar [src]="'IC'" [round]="false" [style.backgroundColor]="'var(--tui-background-neutral-2)'"></tui-avatar>
+          <div tuiTitle="s" class="tui-text_body-s">Квантовые трубки</div>
+          <tui-textfield
+            class="cell-field"
+            tuiTextfieldSize="s"
+            [tuiTextfieldCleaner]="false"
+          >
+            <input disabled class="cell-input" placeholder="0" tuiTextfield />
+          </tui-textfield>
+        </div>
+      </div>
+    </div>
+    } @else {
+      <div id="image" tuiCardLarge="compact">
+        <img ngSrc="../../../assets/graph.png" alt="graph" fill />
+      </div>
+
+    }
+  </div>
+</div>
+
+<ng-template #res>
+  @if (currentResources.length > 0) {
+    @for (resource of currentResources; track $index) {
+      <app-cell [title]="resource" [index]="$index" (deleteCellEvent)="deleteResource($event)" ></app-cell>
+    }
+  }
+</ng-template>
+
+<ng-template #modules>
+  @if (currentModules.length > 0) {
+    @for (modules of currentModules; track $index) {
+      <app-cell [title]="modules" [index]="$index" (deleteCellEvent)="deleteModule($event)"></app-cell>
+    }
+  }
+</ng-template>
+
+<ng-template #dropdown >
+  <div tuiCardLarge="compact" class="tui-text_body-s">
+      Потребляется модулями:
+    <br>
+      Микрочипы: 2000 * 2
+    <br>
+      Дроны: 1000 * 6
+    <br>
+      Теладианий: 720 * 13
+    <br>
+      Улитки майя: 400 * 2
+  </div>
+</ng-template>

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { TuiRoot } from '@taiga-ui/core';
 
 @Component({
-  imports: [NxWelcomeComponent, RouterModule],
+  imports: [RouterModule, TuiRoot],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.less',
+  standalone: true,
+  styleUrl: './app.component.less'
 })
 export class AppComponent {
-  title = 'ppi';
 }

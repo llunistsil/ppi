@@ -1,0 +1,45 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--tui-background-base-alt);
+}
+
+.title {
+  background-color: var(--tui-background-base-alt);
+  border: none;
+  width: 16rem;
+  height: 2rem;
+  font-weight: bold;
+
+  &:focus-visible {
+    outline: none;
+    color: var(--tui-text-tertiary);
+  }
+}
+
+.title-cont {
+  display: flex;
+  justify-items: center;
+}
+
+.button {
+  height: 2rem;
+  font-weight: normal;
+  background-color: var(--tui-background-base-alt);
+  border: var(--tui-border-normal) 1px solid;
+
+  &:first-child {
+    margin-right: 0.5rem;
+    background-color: var(--tui-background-neutral-1);
+  }
+}
+
+.icons {
+  height: 100%;
+  margin-right: 1rem;
+}

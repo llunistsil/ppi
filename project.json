@@ -21,9 +21,24 @@
           {
             "glob": "**/*",
             "input": "public"
+          },
+          {
+            "glob": "**/*",
+            "input": "node_modules/@taiga-ui/icons/src",
+            "output": "assets/taiga-ui/icons"
+          },
+          {
+            "glob": "**/*",
+            "input": "src/assets",
+            "output": "assets"
           }
         ],
-        "styles": ["./src/styles.less"],
+        "styles": [
+          "@taiga-ui/core/styles/taiga-ui-theme.less",
+          "@taiga-ui/core/styles/taiga-ui-fonts.less",
+          "@taiga-ui/addon-mobile/styles/taiga-ui-mobile.less",
+          "./src/styles.less"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -71,7 +86,11 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["./src"]
+        "lintFilePatterns": [
+          "./src",
+          "./functions/**/*.ts",
+          "./functions/**/*.ts"
+        ]
       }
     },
     "test": {
@@ -87,6 +106,18 @@
         "buildTarget": "ppi:build",
         "staticFilePath": "dist/ppi/browser",
         "spa": true
+      }
+    },
+    "serve-functions": {
+      "command": "npx netlify dev"
+    },
+    "deploy-functions": {
+      "dependsOn": ["lint"],
+      "command": "npx netlify deploy",
+      "configurations": {
+        "production": {
+          "command": "npx netlify deploy --prod"
+        }
       }
     }
   }

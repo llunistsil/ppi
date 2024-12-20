@@ -1,0 +1,86 @@
+<div tuiCardLarge id="header">
+
+  <div class="title-cont">
+    <tui-icon
+      class="icons"
+      icon="@tui.figma"
+    />
+    <div
+      class="title tui-text_body-m"
+      type="text"
+    >Имя пользователя
+    </div>
+    <a
+      class="button tui-text_body-m"
+      tuiButton
+      type="button"
+      [routerLink]="['/']"
+    >
+      Создать
+    </a>
+
+  </div>
+
+
+  @if (!localStorage.getItem('user')) {
+    <div>
+      <a
+        class="button tui-text_body-m"
+        tuiButton
+        type="button"
+        [routerLink]="['login']"
+      >
+        Вход
+      </a>
+      <a
+        class="button tui-text_body-s"
+        tuiButton
+        type="button"
+        [routerLink]="['register']"
+      >
+        Регистрация
+      </a>
+    </div>
+  } @else {
+    <div class="title-cont">
+      <a
+        class="button tui-text_body-m"
+        tuiButton
+        type="button"
+        [routerLink]="['profile']"
+      >
+        Профиль
+      </a>
+    </div>
+  }
+</div>
+
+<div class="cont" tuiCardLarge tuiAppearance="floating">
+  <div tuiTitle="m" id="title1">
+    Сохраненные проекты
+  </div>
+
+  <div id="projects">
+    @for (project of projects; track $index) {
+      <div tuiCardLarge tuiAccessories="floating" class="project">
+        <tui-avatar size="xxl" src="Im" [round]="false" (click)="navi()"/>
+        <div tuiTitle="s">
+          {{ project }}
+          <div tuiSubtitle>
+            Body text for whatever you’d like to say. Add main takeaway points, quotes, anecdotes, or even a very very
+            short story.
+          </div>
+          <div class="cont-button">
+            <button
+              class="button1"
+              tuiIconButton
+              iconStart="@tui.trash"
+              size="xs"
+              (click)="deleteProjects($index)"
+            > delete</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
